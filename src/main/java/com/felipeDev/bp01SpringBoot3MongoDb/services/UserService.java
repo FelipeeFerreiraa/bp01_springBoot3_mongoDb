@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.felipeDev.bp01SpringBoot3MongoDb.domain.User;
+import com.felipeDev.bp01SpringBoot3MongoDb.dto.UserDTO;
 import com.felipeDev.bp01SpringBoot3MongoDb.repository.UserRepository;
 import com.felipeDev.bp01SpringBoot3MongoDb.services.exception.ObjectNotFoundException;
 
@@ -25,4 +26,13 @@ public class UserService {
 
 		return obj.orElseThrow(() -> new ObjectNotFoundException("OBEJECT NOT FOUND..."));
 	}
+
+	public User insert(User obj) {
+		return repo.insert(obj);
+	}
+
+	public User fromDTO(UserDTO objDto) {
+		return new User(objDto.getId(), objDto.getName(), objDto.getEmail());
+	}
+
 }
