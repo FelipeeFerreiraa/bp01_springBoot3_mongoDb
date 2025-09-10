@@ -1,16 +1,17 @@
 package com.felipeDev.bp01SpringBoot3MongoDb.resources;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.felipeDev.bp01SpringBoot3MongoDb.domain.User;
+import com.felipeDev.bp01SpringBoot3MongoDb.dto.UserDTO;
 import com.felipeDev.bp01SpringBoot3MongoDb.services.UserService;
 
 @RestController
@@ -22,14 +23,20 @@ public class UserResource {
 
 	// @GetMapping
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<User>> findAll() {
-
-//		User aux = new User("1", "Felipe Domingues", "felipe@gmail.com");
-//		User aux1 = new User("2", "Irineu Ferreira", "irineu@gmail.com");
+	public ResponseEntity<List<UserDTO>> findAll() {
 
 		List<User> list = service.findAll();
-		return ResponseEntity.ok().body(list);
+		List<UserDTO> listDto = list.stream().map(x -> new UserDTO(x)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDto);
 
 	}
 
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public ResponseEntity<UserDTO> fingById(@PathVariable String id) {
+
+		User obj = service.findById(id);
+
+		return ResponseEntity.ok().body(new UserDTO(obj));
+
+	}
 }
