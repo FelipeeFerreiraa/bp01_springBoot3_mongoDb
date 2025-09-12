@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import com.felipeDev.bp01SpringBoot3MongoDb.domain.Post;
 import com.felipeDev.bp01SpringBoot3MongoDb.domain.User;
 import com.felipeDev.bp01SpringBoot3MongoDb.dto.AuthorDTO;
+import com.felipeDev.bp01SpringBoot3MongoDb.dto.CommentDTO;
 import com.felipeDev.bp01SpringBoot3MongoDb.repository.PostRepository;
 import com.felipeDev.bp01SpringBoot3MongoDb.repository.UserRepository;
 
@@ -50,6 +51,13 @@ public class Instantiation implements CommandLineRunner {
 		Post post3 = new Post(null, "Livro Uma breve historia do tempo",
 				"Escrito pelo professor Stephem Hawking, sobre física e buracos negros, tenhobq acabar de ler....",
 				fmt.parse("29/03/2025"), new AuthorDTO(alex));
+
+		CommentDTO c1 = new CommentDTO("comentario 1", fmt.parse("27/08/2025"), new AuthorDTO(alex));
+		CommentDTO c2 = new CommentDTO("comentario 2", fmt.parse("15/03/2025"), new AuthorDTO(bob));
+		CommentDTO c3 = new CommentDTO("comentario 3", fmt.parse("07/12/2025"), new AuthorDTO(alex));
+
+		post1.getComments().addAll(Arrays.asList(c1, c2));
+		post2.getComments().addAll(Arrays.asList(c3));
 
 		postRepository.saveAll(Arrays.asList(post1, post2, post3));
 
