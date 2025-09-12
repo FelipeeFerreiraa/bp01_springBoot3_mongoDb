@@ -1,5 +1,6 @@
 package com.felipeDev.bp01SpringBoot3MongoDb.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,10 @@ public class PostService {
 		Optional<Post> obj = repo.findById(id);
 
 		return obj.orElseThrow(() -> new ObjectNotFoundException("OBEJECT NOT FOUND..."));
+	}
+
+	public List<Post> findByTitle(String text) {
+		return repo.findByTitleContainingIgnoreCase(text);
 	}
 
 }
